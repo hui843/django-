@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  {% load  static %}
+  <meta charset="UTF-8">
+  <title>{% block title %}{% endblock %}</title>
+  <!--bootstrap-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+  <!--font awesome 字体图标-->
+  <script src="https://kit.fontawesome.com/435000e02f.js"></script>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1 class="info"><a href="/student/index/">学生列表</a></h1>
+    <hr class="divider">
+  </header>
+  {% block content %}
+  {% endblock %}
+</div>
+</body>
+</html>

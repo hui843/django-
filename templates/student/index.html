@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>King_dur</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://kit.fontawesome.com/435000e02f.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1 class="info"><a href="/student/index/">学生列表</a></h1>
+    <hr class="divider">
+    <a href="/student/add/"><button class="btn btn-warning btn-ig float-right">添加学生信息<i class="fas fa-user-plus"></i></button></a>
+    <a href="{% url 'excel_Excel' %}">导出学生列表</a>
+    <form action="/student/derive/" method="post">
+        {% csrf_token %}
+        姓名：<input type="text" name="name" />
+        年龄：<input type="text" name="age" />
+        性别：<select name="gender">
+        <option value="0" selected>未选择</option>
+        <option value="1">男</option>
+        <option value="2">女</option>
+    </select>
+        <button type="submit">查找</button>
+    </form>
+<table class="table">
+    <tr class="thead-dark">
+         <th>#</th>
+        <th>学号</th>
+        <th>姓名</th>
+        <th>年龄</th>
+        <th>性别</th>
+        <th>电话</th>
+        <th>头像</th>
+        <th>加入时间</th>
+        <th>操作</th>
+    </th>
+    </tr>
+{#    <tr>#}
+{#        <td><input type="checkbox" name="student"></td>#}
+{#        <td>0001</td>#}
+{#        <td>小明</td>#}
+{#        <td>13</td>#}
+{#        <td>男</td>#}
+{#        <td>13733170000</td>#}
+{#        <td><img src="" width="50px" height="50px"></td>#}
+{#        <td>2018.3.10</td>#}
+{#        <td><a href="#"><i class="fas fa-edit"></i></a> <a href="#"><i class="fas fa-trash-alt"></i></a></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#        <td><input type="checkbox" name="student"></td>#}
+{#        <td>0002</td>#}
+{#        <td>老王</td>#}
+{#        <td>33</td>#}
+{#        <td>男</td>#}
+{#        <td>13733170000</td>#}
+{#        <td><img src="" width="50px" height="50px"></td>#}
+{#        <td>2018.3.10</td>#}
+{#        <td><a href="#"><i class="fas fa-edit"></i></a> <a href="#"><i class="fas fa-trash-alt"></i></a></td>#}
+{#    </tr>#}
+    {% for stu in lsj %}
+    <tr>
+        <td><input type="checkbox" name="student"></td>
+        <td>{{ stu.no }}</td>
+        <td>{{ stu.name }}</td>
+        <td>{{ stu.age }}</td>
+        <td>{{ stu.get_gender_display }}</td>
+        <td>{{ stu.phone }}</td>
+        <td><img src="/media/{{ stu.avatar }}" width="50px" height="50px"></td>
+        <td>{{ stu.join_time | date:"Y-m-d H:i:s" }}</td>
+        <td><a href="/student/{{ stu.no }}/update"><i class="fas fa-edit"></i></a>
+            <a href="/student/{{ stu.no }}/delete"><i class="fas fa-trash-alt"></i></a></td>
+    </tr>
+    {% endfor %}
+</table>
+    <!--分页-->
+     <nav aria-label="page navigation">
+         <ul class="pagination">
+             <li class="page-item"><a href="?page_no={{ page_previous }}&page_size=3" class="page-link">上一页</a></li>
+             {% for i in page_amount_list %}
+                 <li {% if forloop.counter == page_no %} class="page-item active" {% else %} class="page-item"{% endif %}
+                >
+                    <a  href="/student/index/?page_no={{ forloop.counter }}&page_size=3" class="page-link">{{ forloop.counter }}</a>
+                </li>
+             {% endfor %}
+             <li class="page-item"><a href="?page_no={{ page_next }}&page_size=3" class="page-link">下一页</a></li>
+         </ul>
+     </nav>
+</div>
+</body>
+</html>

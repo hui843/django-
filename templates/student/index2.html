@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>king_rog</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://kit.fontawesome.com/435000e02f.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1>学生列表</h1>
+<table class="table">
+    <tr class="thead-dark">
+         <th>#</th>
+        <th>学号</th>
+        <th>姓名</th>
+        <th>年龄</th>
+        <th>性别</th>
+        <th>电话</th>
+        <th>头像</th>
+        <th>加入时间</th>
+        <th>操作</th>
+    </th>
+
+    </tr>
+    {% for stu in students %}
+    <tr>
+        <td><input type="checkbox" name="student"></td>
+        <td>{{ stu.no }}</td>
+        <td>{{ stu.name }}</td>
+        <td>{{ stu.age }}</td>
+        <td>{{ stu.get_gender_display }}</td>
+        <td>{{ stu.phone }}</td>
+        <td><img src="/media/{{ stu.avatar }}" width="50px" height="50px"></td>
+        <td>{{ stu.join_time | date:"Y-m-d H:i:s" }}</td>
+        <td><a href="#"><i class="fas fa-edit"></i></a> <a href="#"><i class="fas fa-trash-alt"></i></a></td>
+    </tr>
+    {% endfor %}
+</table>
+    <nav aria-label="page navigation">
+         <ul class="pagination">
+            {% if students.has_previous %}
+
+             <li class="page-item"><a href="?page={{ students.previous_page_number }}" class="page-link">上一页</a>
+                {% endif %}
+{#                 <li  class="page-item">#}
+{#                <a class="page-link" href="?Page={{ students.number }} of {{ students.paginator.num_pages }}">1</a>#}
+{#                <a class="page-link" href="?Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}">2</a>#}
+{#                </li>#}
+{#                <li  class="page-item">#}
+{#                <a class="page-link" href="?Page= {{ students.number }}">1</a>#}
+{#                <a class="page-link" href="?Page= {{ students.number }}">2</a>#}
+{#                </li>#}
+         <li class="page-item"><a class="page-link">{{ students.number }}</a></li>
+             {% if students.has_next %}
+             <li class="page-item"><a href="?page={{ students.next_page_number }}" class="page-link">下一页</a></li>
+             {% endif %}
+         </ul>
+     </nav>
+</div>
+</body>
+</html>

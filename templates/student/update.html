@@ -1,0 +1,41 @@
+{% extends 'student/base.html' %}
+{% block title %}{% endblock %}
+
+{% block content %}
+    <form action="/student/{{ stu.no }}/do_update/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>新学号:</label>
+            <input type="text" name="no" class="form-control form-text" placeholder="" required value="{{ stu.no }}"
+
+            >
+            <div class="form-group">
+                <label>新姓名:</label>
+                <input type="text" name="name" class="form-control form-text" placeholder="" required value="{{ stu.name }}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>新年龄:</label>
+            <input type="text" name="age" class="form-control form-text" placeholder="" required value="{{ stu.age }}">
+        </div>
+        <div class="form-group">
+            <label>性别：</label>
+            <select name="gender" class="form-control">
+                <option value="0" selected>未选择</option>
+                <option value="1">男</option>
+                <option value="2">女</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="text-muted">新电话号码：</label>
+            <input type="text" name="phone" class="form-control form-text" placeholder="" required value="{{ stu.phone }}">
+        </div>
+        <div class="form-group">
+            <label>新头像:</label>
+            <input type="file" name="avatar" class="btn btn-primary" placeholder="" required value="{{ stu.avatar }}">
+        </div>
+        <div class="form-group">
+            <button type="submit" name="avatar" class="btn btn-primary" placeholder="" required>提交保存</button>
+        </div>
+    </form>
+{% endblock %}

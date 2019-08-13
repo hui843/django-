@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册页</title>
+</head>
+<body>
+<!--错误login/register/...会在当前页面url后继续补
+    正确写法  /login/register/ ip:port后开始/-->
+<form id="register-form" action="/login/register/" method="post">
+    {% csrf_token %}
+    姓名：<input id="form-name" type="text" name="name"><br>
+    密码：<input type="password" name="password"><br>
+    邮箱：<input type="text" name="email"><br>
+    备注：<input type="text" name="note"><br>
+    爱好：<input type="text" name="hobby"><br>
+    <button type="submit">注册</button>
+</form><br>
+<h3 id="error_message" style="color: red">{{ crror_message }}</h3>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    //jquery源代码。 1>文件外层被小括号括住，表示浏览器加载完jQuery代码后立即执行，这样才不影响后面jQuery语法的使用。
+    //2>源码 window.jQuery = window.$ = jQuery;把jquery的方法封装到了全局对象window中。写成 window.jQuery('#form-name'); window.$('#form-name')
+    // $('#form-name')
+    //3>$('#form-name')  jquery对象初始化、根据参数选择标签，实质上用的还是原生js方法。document.getELementBYxxxx()
+    //js{} 表示函数体或对象。对象 键 key不用加引号。
+    $(function () {
+        $('#form-name').change(function () {
+            console.log('触发change事件');
+            $.ajax({
+                type:"POST",  //请求方式
+                url:'http://127.0.0.1:8000/login/register_check/', //接口
+                data:{'name':$('#form-name').val()},
+                async:true,    //默认异步。这个参数可以不写
+                dataType:"json",  // xml
+                error:function () {
+                    // 错误回调函数,
+                    // 指的是http请求的成功失败，不是业务逻辑用户名长短是否合格
+                },
+                success:function (resp) {
+                    //成功回调
+                    console.log(resp);  //js对象
+                    console.log(resp.error_message);
+                    error_message = resp.error_message;
+                    $('#error_message').html(error_message)
+                },
+                complete:function (resp) {
+{#                    console.log(resp);#}
+{#                    respJson = resp.responseTEXT;#}
+{#                    resp_json_obj = JSON.parse(respText);#}
+{#                    resp_json_obj.error_message#}
+                    //请求完成后执行
+
+                }
+            })
+
+        })
+    })
+</script>
+
+
+</body>
+</html>

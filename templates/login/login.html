@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录页</title>
+</head>
+<body>
+<form action="/login/login/" method="post">
+    {% csrf_token %}
+    <input type="text" name="name">
+    <input type="password" name="password">
+    <button type="submit">登录</button>
+</form>
+<form action="/login/auth/" method="post">
+    验证码：<input type="text" name="auth_code">
+    <img src="../../static/image/avatar/">
+</form>
+{{ message }}
+</body>
+</html>
